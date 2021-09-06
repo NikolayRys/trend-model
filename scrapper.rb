@@ -14,15 +14,13 @@ fails = 0
 
 until file.eof?
   begin
+    puts "Reached: #{counter}" if counter % 1000 == 0
 
-    # if counter < 55380
-    #   counter += 1
-    #   file.readline
-    #     if counter % 1000 == 0
-    #       puts "Skipped: #{counter}"
-    #     end
-    #   next
-    # end
+    if counter % 100 != 0
+      counter += 1
+      file.readline
+      next
+    end
 
   post = JSON.parse(file.readline)
   passed_days = (post["retrieved_utc"] - post["created_utc"]) / (60*60*24)
@@ -108,9 +106,8 @@ until file.eof?
       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
   SQL
   counter += 1
-  if counter % 10 == 0
-    puts "Done: #{counter}"
-  end
+  puts "Done: #{counter}"
+
 
   rescue => e
 
