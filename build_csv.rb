@@ -18,6 +18,9 @@ CSV.open('dataset.csv', 'w') do |csv|
     puts('Starting: ' + name)
     db = access_db(name)
     db.execute( "select * from posts" ) do |row|
+      row['target_score'] = row['target_score'] - row['current_score']
+      row.delete('quarantine')
+      row.delete('external_content')
       csv << row.values[1..-1]
     end
   end
