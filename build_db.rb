@@ -14,7 +14,6 @@ db.execute <<-SQL
     spoiler BOOL,
     over_18 BOOL,
     distinguished BOOL,
-    external_content BOOL,
     gilded BOOL,
     num_comments INT,
     media_only BOOL,
@@ -30,7 +29,6 @@ db.execute <<-SQL
     body_symbols INT,
     body_words INT,
     body_sentences INT,
-    quarantine BOOL
   );
 
   CREATE UNIQUE INDEX idx_posts_id ON posts (id);
@@ -39,7 +37,6 @@ SQL
 db.execute <<-SQL
   create table if not exists subreddits (
     name varchar(30),
-    quarantine INT,
     subscribers INT,
     restrict_posting INT
   );

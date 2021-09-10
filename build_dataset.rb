@@ -7,16 +7,16 @@ require 'http'
 
 db = SQLite3::Database.new('dataset.db')
 http = HTTP.accept(:json)
-file = File.open('raw/2021-05.txt', 'r')
+file = File.open('raw/2021-03.txt', 'r')
 
 counter = 0
 fails = 0
 
 until file.eof?
   begin
-    puts "Reached: #{counter}" if counter % 1000 == 0
+    #puts "Reached: #{counter}" if counter % 1000 == 0
 
-    if counter % 100 != 0
+    if counter < 19296001 || counter % 400 != 0
       counter += 1
       file.readline
       next
@@ -48,7 +48,6 @@ until file.eof?
     spoiler: post['spoiler'],
     over_18: post['over_18'],
     distinguished: !!post['distinguished'],
-    external_content: !post['url'].include?(post['permalink']) || !post['is_reddit_media_domain'],
     gilded: post['gilded'],
     num_comments: post['num_comments'],
     media_only: post['media_only'],
@@ -64,7 +63,6 @@ until file.eof?
     body_symbols: post['selftext'].gsub(/\s+/, "").size,
     body_words: NlpPure::Segmenting::DefaultWord.parse(post['selftext']).size,
     body_sentences: NlpPure::Segmenting::DefaultSentence.parse(post['selftext']).reject { |c| c.empty? }.size,
-    quarantine: post['quarantine'],
   }
 
   db_row_data = dataset_row.transform_values do |v|
@@ -86,7 +84,6 @@ until file.eof?
       spoiler,
       over_18,
       distinguished,
-      external_content,
       gilded,
       num_comments,
       media_only,
@@ -101,9 +98,8 @@ until file.eof?
       title_words,
       body_symbols,
       body_words,
-      body_sentences,
-      quarantine) 
-      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+      body_sentences) 
+      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
   SQL
   counter += 1
   puts "Done: #{counter}"
@@ -113,7 +109,7 @@ until file.eof?
 
     fails += 1
     if fails % 5 == 0
-      binding.pry
+      #binding.pry
       puts "Failed: #{fails}"
     end
   end
