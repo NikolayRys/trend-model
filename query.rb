@@ -1,21 +1,24 @@
 #!/usr/bin/env ruby
 
+# Usage example:
+# ./query.rb 30 https://www.reddit.com/r/personalfinance/comments/owhy0r/leverage_through_leaps_for_the_diy_investor/
+
 require 'pry'
 require 'scylla' # https://github.com/hashwin/scylla
 require 'nlp_pure/segmenting/default_word'  # https://github.com/parhamr/nlp-pure
 require 'nlp_pure/segmenting/default_sentence'
 require 'http'
 
-target_days = 30
-url = 'https://www.reddit.com/r/personalfinance/comments/owhy0r/leverage_through_leaps_for_the_diy_investor/'
 
+target_days = ARGV[0].to_i
+url = ARGV[1]
 
 http = HTTP.accept(:json)
 post = http.get("#{url}.json").parse.first['data']["children"].first['data']
 
 passed_days = (Time.now.to_i - post["created_utc"]) / (60*60*24)
 
-if post['archived'] || passed_days > 180
+if post['archived'] || passed_days + target_days > 180
   post['score']
 else
   puts({
