@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # Usage example:
-# ./query.rb 30 https://www.reddit.com/r/personalfinance/comments/owhy0r/leverage_through_leaps_for_the_diy_investor/
+# ./query.rb https://www.reddit.com/r/personalfinance/comments/owhy0r/leverage_through_leaps_for_the_diy_investor/
 
 require 'pry'
 require 'scylla' # https://github.com/hashwin/scylla
