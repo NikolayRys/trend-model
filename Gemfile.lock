@@ -24,6 +24,9 @@ GEM
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
     method_source (1.0.0)
+    multi_json (1.15.0)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
     nlp-pure (0.2.0)
     nokogiri (1.12.4-x86_64-darwin)
       racc (~> 1.4)
@@ -35,14 +38,30 @@ GEM
       pry (~> 0.13.0)
     public_suffix (4.0.6)
     racc (1.5.2)
+    rack (2.2.3)
+    rack-protection (2.1.0)
+      rack
     rake (13.0.6)
+    ruby2_keywords (0.0.5)
     sanitize (6.0.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     scylla (1.2.0)
       sanitize
       unicode (~> 0.4.4)
+    sinatra (2.1.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
+      tilt (~> 2.0)
+    sinatra-contrib (2.1.0)
+      multi_json
+      mustermann (~> 1.0)
+      rack-protection (= 2.1.0)
+      sinatra (= 2.1.0)
+      tilt (~> 2.0)
     sqlite3 (1.4.2)
+    tilt (2.0.10)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.7)
@@ -56,6 +75,8 @@ DEPENDENCIES
   nlp-pure
   pry-byebug
   scylla
+  sinatra
+  sinatra-contrib
   sqlite3
 
 BUNDLED WITH
